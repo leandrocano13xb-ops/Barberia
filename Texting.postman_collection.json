@@ -1,0 +1,426 @@
+{
+  "info": {
+    "_postman_id": "acd6e79c-da95-4fc0-9462-babc33e191ef",
+    "name": "Texting",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53504387",
+    "_collection_link": "https://go.postman.co/collection/53504387-acd6e79c-da95-4fc0-9462-babc33e191ef?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Ver clientes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=clientes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "clientes"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ver barberos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=barberos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "barberos"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creamos nuevo barbero",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Esteban Quito\",\r\n  \"email\": \"esteban.quito@email.com\",\r\n  \"telefono\": \"5550199\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=clientes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "clientes"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminamos Barberos",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Leonardo Dicaprio\",\r\n  \"especialidad\": \"Cortes clásicos\",\r\n  \"telefono\": \"5550197\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=barberos&id=4",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "barberos"
+            },
+            {
+              "key": "id",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Id 1 cambió de teléfono",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"telefono\": \"123456789\" \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=clientes&id=1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "clientes"
+            },
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregamos Servicio",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre_servicio\": \"Limpieza Facial\",\r\n  \"precio\": 20000.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=servicios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "servicios"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Borraamos un servicio id 5",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=servicios&id=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "servicios"
+            },
+            {
+              "key": "id",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Visualizamos la tabla de servicios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=servicios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "servicios"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ver citas programadas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=citas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "citas"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregamos cita",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id_cliente\": 1,\r\n  \"id_barbero\": 2,\r\n  \"id_servicio\": 1,\r\n  \"fecha_cita\": \"2025-10-15\",\r\n  \"hora_cita\": \"11:00:00\",\r\n  \"estado\": \"pendiente\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=citas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "citas"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregamos servicios",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre_servicio\": \"Limpieza Facial\",\r\n  \"precio\": 20000.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=servicios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "servicios"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Visualizamos las ventas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=ventas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "ventas"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregamos venta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id_cita\": 7,\r\n  \"metodo_pago\": \"efectivo\",\r\n  \"total\": 25000.00,\r\n  \"fecha_pago\": \"2025-10-15\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost/Barberia/api.php?tabla=ventas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "Barberia",
+            "api.php"
+          ],
+          "query": [
+            {
+              "key": "tabla",
+              "value": "ventas"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
