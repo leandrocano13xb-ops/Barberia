@@ -1,40 +1,171 @@
 /* Fondo personalizado */
 .bg-custom {
-  background-color: #1a1a1a; /* Un gris muy oscuro casi negro */
-  background-image: linear-gradient(315deg, #1a1a1a 0%, #3d3d3d 74%);
+  background-color: #111111;
+  background-image: radial-gradient(circle at top, rgba(197, 160, 89, 0.18), transparent 25%),
+    linear-gradient(315deg, #1a1a1a 0%, #3d3d3d 74%);
   min-height: 100vh;
+  color: #f3f2ef;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #111111;
 }
 
 /* Componente Tarjeta de Barbería */
 .card-barber {
-  border: 2px solid #c5a059; /* Dorado */
-  background-color: #2b2b2b;
-  color: #ffffff;
-  border-radius: 15px;
+  border: 2px solid rgba(197, 160, 89, 0.9);
+  background-color: #262626;
+  color: #f3f2ef;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  padding: 2rem;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Estilo para los iconos del input */
-.input-group-text {
-  background-color: #c5a059;
-  color: white;
-  border: none;
-}
-
-/* Botón personalizado "Gold" */
-.btn-gold {
-  background-color: #c5a059;
-  color: #000;
-  border: none;
-  transition: 0.3s;
-}
-
-.btn-gold:hover {
-  background-color: #e2b86a;
-  color: #000;
-  transform: scale(1.02);
+.card-barber:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
 }
 
 .card-barber h3 {
   color: #c5a059;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.card-barber p,
+.card-barber label,
+.card-barber small {
+  color: #dcd8d0;
+}
+
+.card-barber .card-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.card-barber .card-content.full-width {
+  grid-template-columns: 1fr;
+}
+
+/* Formulario y entradas */
+.input-group,
+.form-control,
+.btn-gold {
+  border-radius: 12px;
+}
+
+.form-control {
+  background-color: #313131;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f3f2ef;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.form-control:focus {
+  border-color: #c5a059;
+  box-shadow: 0 0 0 0.15rem rgba(197, 160, 89, 0.25);
+  transform: translateY(-1px);
+}
+
+.input-group-text {
+  background-color: #c5a059;
+  color: #111111;
+  border: none;
+  font-weight: 700;
+}
+
+/* Botón personalizado "Gold" */
+.btn-gold {
+  background: linear-gradient(135deg, #c5a059 0%, #f0d185 100%);
+  color: #111111;
+  border: none;
+  padding: 0.95rem 1.8rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  font-weight: 700;
+  box-shadow: 0 12px 24px rgba(197, 160, 89, 0.18);
+}
+
+.btn-gold:hover,
+.btn-gold:focus {
+  background: linear-gradient(135deg, #e2b86a 0%, #ffde9b 100%);
+  color: #111111;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(197, 160, 89, 0.24);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* Tarjeta secundaria y detalles */
+.card-barber .section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.card-barber .section-title::before {
+  content: '';
+  width: 42px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(197, 160, 89, 1), rgba(197, 160, 89, 0.15));
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .card-barber {
+    padding: 1.75rem;
+  }
+
+  .card-barber .card-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .bg-custom {
+    background-image: radial-gradient(circle at top, rgba(197, 160, 89, 0.14), transparent 20%),
+      linear-gradient(315deg, #111111 0%, #2a2a2a 80%);
+  }
+
+  .card-barber {
+    margin: 1rem;
+    padding: 1.4rem;
+    border-radius: 18px;
+  }
+
+  .card-barber h3 {
+    font-size: 1.45rem;
+  }
+
+  .btn-gold {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .card-barber {
+    padding: 1.15rem;
+  }
+
+  .input-group-text,
+  .form-control,
+  .btn-gold {
+    border-radius: 14px;
+  }
+
+  .card-barber .section-title::before {
+    width: 32px;
+  }
 }
