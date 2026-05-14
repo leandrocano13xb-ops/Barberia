@@ -38,7 +38,7 @@ Esto sucedió porque `api.php` estaba configurado con la contraseña `Admin`, pe
 1. Inicia Laragon.
 2. Asegúrate de que el proyecto esté disponible en `http://localhost/Barberialeo/`.
 3. Abre una página de formulario, por ejemplo:
-   - `http://localhost/Barberialeo/html/barberos.html`
+   - `http://localhost/Barberia/html/barberos.html`
 4. Envía un registro.
 5. También puedes probar directamente la API en el navegador:
    - `http://localhost/Barberialeo/api.php?tabla=barberos`
