@@ -1,5 +1,5 @@
 ```
-└── 📁Barberialeo
+└── 📁Barberia
     └── 📁css
         ├── estilos.css
     └── 📁html
