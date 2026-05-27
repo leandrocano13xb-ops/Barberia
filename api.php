@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // 2. Parámetros de conexión
 $host = "127.0.0.1";
 $user = "root";
-$pass = "admin";
+$pass = "Admin";
 $db = "barberia_db";
 $port = 3306;
 
