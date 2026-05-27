@@ -1,9 +1,84 @@
 /**
- * ARCHIVO: app.js - Rama: Caballero 
+ * ARCHIVO: app.js - Rama: Caballero (Evolucionado con Login/Registro)
  * DESCRIPCIÓN:
- * Este archivo contiene la lógica para manejar los formularios de la aplicación de barbería.
- * Se encarga de capturar los datos ingresados por el usuario, enviarlos al servidor a través de fetch,
+ * Manejo de formularios de la aplicación de barbería. Captura datos,
+ * gestiona selectores dinámicos y procesa la autenticación con api.php.
  */
+
+// --- 0. AUTENTICACIÓN (NUEVO: Login y Registro) ---
+
+// Manejo del formulario de Login
+const formLogin = document.getElementById("formLogin");
+if (formLogin) {
+  formLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const loginInput = document.getElementById("login_input").value; // Puede ser username o email
+    const passwordInput = document.getElementById("password_input").value;
+
+    const apiUrl = new URL("../api.php", window.location.href);
+
+    fetch(`${apiUrl.href}?accion=login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ login: loginInput, password: passwordInput })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.mensaje) {
+          alert("✅ " + data.mensaje);
+          // Guardamos los datos del usuario en el navegador por si los necesitan en otras vistas
+          localStorage.setItem("usuario_sesion", JSON.stringify(data.usuario));
+          // Redireccionar al menú o citas tras el éxito
+          window.location.href = "citas.html";
+        } else {
+          alert("❌ Error: " + data.error);
+        }
+      })
+      .catch((err) => {
+        console.error("Error en login:", err);
+        alert("Error de conexión al intentar iniciar sesión.");
+      });
+  });
+}
+
+// Manejo del formulario de Registro
+const formRegistro = document.getElementById("formRegistro");
+if (formRegistro) {
+  formRegistro.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const datos = {
+      username: document.getElementById("reg_username").value,
+      email: document.getElementById("reg_email").value,
+      password: document.getElementById("reg_password").value,
+      nombre: document.getElementById("reg_nombre").value,
+      telefono: document.getElementById("reg_telefono").value,
+      rol: document.getElementById("reg_rol") ? document.getElementById("reg_rol").value : "cliente"
+    };
+
+    const apiUrl = new URL("../api.php", window.location.href);
+
+    fetch(`${apiUrl.href}?accion=registro`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.mensaje) {
+          alert("✅ " + data.mensaje);
+          formRegistro.reset();
+          // Opcional: Redirigir al usuario para que inicie sesión
+        } else {
+          alert("❌ Error: " + data.error);
+        }
+      })
+      .catch((err) => {
+        console.error("Error en registro:", err);
+        alert("Error de conexión al intentar registrar el usuario.");
+      });
+  });
+}
+
 
 // --- 1. BARBEROS ---
 const formBarbero = document.getElementById("formBarbero");
@@ -19,7 +94,7 @@ if (formBarbero) {
   });
 }
 
-// --- 2. CLIENTES (Ajustado email según imagen.png) ---
+// --- 2. CLIENTES ---
 const formCliente = document.getElementById("formCliente");
 if (formCliente) {
   formCliente.addEventListener("submit", (e) => {
@@ -27,26 +102,26 @@ if (formCliente) {
     const datos = {
       nombre: document.getElementById("nombre_cliente").value,
       telefono: document.getElementById("telefono_cliente").value,
-      email: document.getElementById("email_cliente").value, // Se cambió 'correo' por 'email'
+      email: document.getElementById("email_cliente").value,
     };
     enviarDatos(datos, "clientes", formCliente);
   });
 }
 
-// --- 3. SERVICIOS (Ajustado nombre_servicio según imagen.png) ---
+// --- 3. SERVICIOS ---
 const formServicio = document.getElementById("formServicio");
 if (formServicio) {
   formServicio.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = {
-      nombre_servicio: document.getElementById("nombre_servicio").value, // Ajustado
+      nombre_servicio: document.getElementById("nombre_servicio").value,
       precio: document.getElementById("precio_servicio").value,
     };
     enviarDatos(datos, "servicios", formServicio);
   });
 }
 
-// --- 4. CITAS (Ajustado fecha_cita y hora_cita según imagen.png) ---
+// --- 4. CITAS ---
 const formCita = document.getElementById("formCita");
 if (formCita) {
   formCita.addEventListener("submit", (e) => {
@@ -65,9 +140,7 @@ if (formCita) {
 // Carga los clientes registrados para el selector de citas
 function cargarClientes() {
   const selectCliente = document.getElementById("id_cliente");
-  if (!selectCliente) {
-    return;
-  }
+  if (!selectCliente) return;
 
   const apiUrl = new URL("../api.php", window.location.href);
   fetch(`${apiUrl.href}?tabla=clientes`)
@@ -84,17 +157,13 @@ function cargarClientes() {
         selectCliente.appendChild(option);
       });
     })
-    .catch((error) => {
-      console.error("Error cargando clientes:", error);
-    });
+    .catch((error) => console.error("Error cargando clientes:", error));
 }
 
 // Carga los barberos registrados para el selector de citas
 function cargarBarberos() {
   const selectBarbero = document.getElementById("id_barbero");
-  if (!selectBarbero) {
-    return;
-  }
+  if (!selectBarbero) return;
 
   const apiUrl = new URL("../api.php", window.location.href);
   fetch(`${apiUrl.href}?tabla=barberos`)
@@ -111,16 +180,12 @@ function cargarBarberos() {
         selectBarbero.appendChild(option);
       });
     })
-    .catch((error) => {
-      console.error("Error cargando barberos:", error);
-    });
+    .catch((error) => console.error("Error cargando barberos:", error));
 }
 
 function cargarServicios() {
   const selectServicio = document.getElementById("id_servicio");
-  if (!selectServicio) {
-    return;
-  }
+  if (!selectServicio) return;
 
   const apiUrl = new URL("../api.php", window.location.href);
   fetch(`${apiUrl.href}?tabla=servicios`)
@@ -133,36 +198,35 @@ function cargarServicios() {
       data.forEach((servicio) => {
         const option = document.createElement("option");
         option.value = servicio.id_servicio;
-        option.textContent = `${servicio.nombre_servicio} - ${servicio.precio}`;
+        option.textContent = `${servicio.nombre_servicio} - $${servicio.precio}`;
         selectServicio.appendChild(option);
       });
     })
-    .catch((error) => {
-      console.error("Error cargando servicios:", error);
-    });
+    .catch((error) => console.error("Error cargando servicios:", error));
 }
 
+// Invocar cargas dinámicas de selectores
 cargarClientes();
 cargarBarberos();
 cargarServicios();
 
-// --- 5. VENTAS (Ajustado total y fecha_pago según imagen.png) ---
+// --- 5. VENTAS ---
 const formVenta = document.getElementById("formVenta");
 if (formVenta) {
   formVenta.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = {
-      id_cita: document.getElementById("id_cita_venta").value, // Relación directa con citas
+      id_cita: document.getElementById("id_cita_venta").value,
       metodo_pago: document.getElementById("metodo_pago").value,
-      total: document.getElementById("monto_venta").value, // Se cambió 'monto' por 'total'
-      fecha_pago: new Date().toISOString().split('T')[0] // Genera YYYY-MM-DD automáticamente
+      total: document.getElementById("monto_venta").value,
+      fecha_pago: new Date().toISOString().split('T')[0]
     };
     enviarDatos(datos, "ventas", formVenta);
   });
 }
 
 /**
- * FUNCIÓN REUTILIZABLE
+ * FUNCIÓN REUTILIZABLE CRUD POST
  */
 function enviarDatos(objetoDatos, tabla, formulario) {
   const apiUrl = new URL("../api.php", window.location.href);

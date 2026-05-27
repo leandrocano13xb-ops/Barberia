@@ -42,7 +42,7 @@ Esto sucedió porque `api.php` estaba configurado con la contraseña `Admin`, pe
 4. Envía un registro.
 5. También puedes probar directamente la API en el navegador:
    - `http://localhost/Barberialeo/api.php?tabla=barberos`
-   - `http://localhost/Barberialeo/api.php?tabla=clientes`
+   - `http://localhost/Barberia/api.php?tabla=clientes`
 
 Si la conexión es correcta, `api.php` devolverá JSON válido (por ejemplo `[]` si no hay registros).
 
