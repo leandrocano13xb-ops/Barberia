@@ -132,6 +132,7 @@ if (formCita) {
       id_servicio: document.getElementById("id_servicio").value,
       fecha_cita: document.getElementById("fecha").value,
       hora_cita: document.getElementById("hora").value,
+      estado: document.getElementById("estado").value,
     };
     enviarDatos(datos, "citas", formCita);
   });
@@ -150,10 +151,11 @@ function cargarClientes() {
         console.error("Respuesta inesperada al cargar clientes", data);
         return;
       }
+      selectCliente.innerHTML = '<option value="" disabled selected>Seleccione un cliente</option>';
       data.forEach((cliente) => {
         const option = document.createElement("option");
         option.value = cliente.id_cliente;
-        option.textContent = `${cliente.nombre} - ${cliente.telefono} - ${cliente.email}`;
+        option.textContent = `${cliente.nombre} - ${cliente.telefono || ''} - ${cliente.email || ''}`;
         selectCliente.appendChild(option);
       });
     })
@@ -173,10 +175,11 @@ function cargarBarberos() {
         console.error("Respuesta inesperada al cargar barberos", data);
         return;
       }
+      selectBarbero.innerHTML = '<option value="" disabled selected>Seleccione un barbero</option>';
       data.forEach((barbero) => {
         const option = document.createElement("option");
         option.value = barbero.id_barbero;
-        option.textContent = `${barbero.nombre} - ${barbero.telefono} - ${barbero.especialidad}`;
+        option.textContent = `${barbero.nombre} - ${barbero.especialidad}`;
         selectBarbero.appendChild(option);
       });
     })
@@ -195,6 +198,7 @@ function cargarServicios() {
         console.error("Respuesta inesperada al cargar servicios", data);
         return;
       }
+      selectServicio.innerHTML = '<option value="" disabled selected>Seleccione un servicio</option>';
       data.forEach((servicio) => {
         const option = document.createElement("option");
         option.value = servicio.id_servicio;
@@ -205,10 +209,35 @@ function cargarServicios() {
     .catch((error) => console.error("Error cargando servicios:", error));
 }
 
+// Carga las citas registradas para el selector de ventas
+function cargarCitas() {
+  const selectCita = document.getElementById("id_cita_venta");
+  if (!selectCita) return;
+
+  const apiUrl = new URL("../api.php", window.location.href);
+  fetch(`${apiUrl.href}?tabla=citas`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (!Array.isArray(data)) {
+        console.error("Respuesta inesperada al cargar citas", data);
+        return;
+      }
+      selectCita.innerHTML = '<option value="" disabled selected>Seleccione una cita</option>';
+      data.forEach((cita) => {
+        const option = document.createElement("option");
+        option.value = cita.id_cita;
+        option.textContent = `Cita #${cita.id_cita} - ${cita.fecha_cita} ${cita.hora_cita || ''} (${cita.estado || 'pendiente'})`;
+        selectCita.appendChild(option);
+      });
+    })
+    .catch((error) => console.error("Error cargando citas:", error));
+}
+
 // Invocar cargas dinámicas de selectores
 cargarClientes();
 cargarBarberos();
 cargarServicios();
+cargarCitas();
 
 // --- 5. VENTAS ---
 const formVenta = document.getElementById("formVenta");
