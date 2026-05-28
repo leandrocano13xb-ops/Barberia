@@ -212,14 +212,40 @@ function cargarServicios() {
 // Carga las citas registradas para el selector de ventas
 function cargarCitas() {
   const selectCita = document.getElementById("id_cita_venta");
-  if (!selectCita) return;
+  if (!selectCita) {
+    console.warn('cargarCitas: elemento #id_cita_venta no encontrado. Verifica que este script se cargue en ventas.html');
+    return;
+  }
 
   const apiUrl = new URL("../api.php", window.location.href);
+  console.log('cargarCitas: iniciando fetch a', `${apiUrl.href}?tabla=citas`);
   fetch(`${apiUrl.href}?tabla=citas`)
-    .then((res) => res.json())
+    .then((res) => {
+      console.log("cargarCitas: status", res.status, "content-type:", res.headers.get('content-type'));
+      if (!res.ok) {
+        return res.text().then(text => {
+          console.error('cargarCitas: respuesta con error HTTP', res.status, text);
+          throw new Error('HTTP ' + res.status);
+        });
+      }
+      return res.text().then(text => {
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          console.error('cargarCitas: respuesta no JSON:', text);
+          throw e;
+        }
+      });
+    })
     .then((data) => {
+      console.log("cargarCitas: respuesta recibida", data);
       if (!Array.isArray(data)) {
         console.error("Respuesta inesperada al cargar citas", data);
+        selectCita.innerHTML = '<option value="" disabled selected>Error al cargar citas</option>';
+        return;
+      }
+      if (data.length === 0) {
+        selectCita.innerHTML = '<option value="" disabled selected>No hay citas registradas</option>';
         return;
       }
       selectCita.innerHTML = '<option value="" disabled selected>Seleccione una cita</option>';
@@ -230,14 +256,35 @@ function cargarCitas() {
         selectCita.appendChild(option);
       });
     })
-    .catch((error) => console.error("Error cargando citas:", error));
+    .catch((error) => {
+      console.error("Error cargando citas:", error);
+      selectCita.innerHTML = '<option value="" disabled selected>Error de conexión</option>';
+    });
 }
 
-// Invocar cargas dinámicas de selectores
-cargarClientes();
-cargarBarberos();
-cargarServicios();
-cargarCitas();
+function inicializarSelectores() {
+  cargarClientes();
+  cargarBarberos();
+  cargarServicios();
+  cargarCitas();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      inicializarSelectores();
+    } catch (err) {
+      console.error('Error al inicializar selectores:', err);
+    }
+  });
+} else {
+  try {
+    inicializarSelectores();
+  } catch (err) {
+    console.error('Error al inicializar selectores:', err);
+  }
+}
+
 
 // --- 5. VENTAS ---
 const formVenta = document.getElementById("formVenta");
